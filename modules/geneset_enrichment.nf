@@ -29,16 +29,16 @@ process create_ranking {
 // Run gene set enrichment
 // All parameters are passed in directly to the template script
 process run_fgsea {
-    container "${params.container__gseapy}"
+    container "${params.container__fgsea}"
     label "mem_medium"
-    publishDir "${params.output_dir}", mode: "copy", overwrite: true
+    publishDir "${params.output_dir}/gsea/", mode: "copy", overwrite: true
     
     input:
     path ranking, stageAs: "rank/*"
     path gmt, stageAs: "gmt/*"
 
     output:
-    path "gsea/**"
+    path "*.csv"
 
     script:
     // Run the script in templates/run_gsea.R
@@ -57,10 +57,10 @@ workflow geneset_enrichment {
         create_ranking(counts_ch)
 
         // Get the gmt file
-        //gmt_ch = Channel.fromPath(params.genesets_file)
+        gmt_ch = Channel.fromPath(params.genesets_file)
 
         // Run gene set enrichment. 
-        //geneset_enrichment(create_ranking.out,
-        //    gmt_ch)
+        run_fgsea(create_ranking.out,
+            gmt_ch)
 
 }
