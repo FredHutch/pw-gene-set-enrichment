@@ -4,17 +4,17 @@ Workflow for performing gene set enrichment analysis from differential expressio
 
 ## Input Data
 
-The input data for this workflow must consist of two files, a counts file and a
+The input data for this workflow must consist of two files, an input csv file and a
 GMT geneset reference file. 
 
-The counts file contains the 
+The input CSV file contains the 
 
-### Counts Table Format
+### Input CSV Format
 
-The counts table must be formatted as a CSV, with the file
+The input csv must be formatted as a CSV, with the file
 extension '.csv[.gz]', as appropriate.
 
-The counts table must have at least 2 columns: one for the gene ID, and a 'score' column showing relative expression levels for that gene (e.g. log2 fold change). There may be additional columns in the counts table, but they will be ignored
+The input csv must have at least 3 columns: one for the gene ID, a 'score' column showing relative expression levels for that gene (e.g. log2 fold change), and a p-value column. There may be additional columns in the csv, but they will be ignored
 in this analysis.
 
 ### Genesets File

@@ -5,6 +5,7 @@ nextflow.enable.dsl=2
 
 
 // Set default parameters
+// many of the default parameters are in the nextflow.config
 params.help = false
 params.input_csv = false
 params.genesets_file = false
@@ -32,7 +33,7 @@ Required Arguments:
   --output_dir          Folder to write output files to
 
 Optional Arguments:
-  --rank_method         Sample normalization method. Choose from {‘logfold-stddev’}. Default: logfold-stddev.
+  --rank_method         Sample normalization method. Choose from {‘logfold-splitrank}. Default: logfold-splitrank.
   --score_column        The name of the column in the input_csv to use to create gene rank. Default: logFC
   --pval_column         The name of the column in the input_csv that has p_values for the score column. Default: pvalue
   --gene_column         The name of the column in the input_csv with gene ids. Default: gene_id

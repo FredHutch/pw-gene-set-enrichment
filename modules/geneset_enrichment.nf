@@ -4,7 +4,7 @@
 nextflow.enable.dsl=2
 
 
-// Create the ranking data from 
+// Create the ranking data from the input CSV (e.g. diff exp results)
 // All parameters are passed in directly to the template script
 process create_ranking {
     container "${params.container__pandas}"

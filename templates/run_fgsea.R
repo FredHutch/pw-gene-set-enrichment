@@ -1,7 +1,6 @@
 #!/usr/bin/env Rscript
 library(fgsea)
 library(data.table)
-library(ggplot2)
 set.seed(42)
 
 # load in the GMT file
@@ -15,6 +14,8 @@ ranks <- read.csv("${ranking}",
 ranks2 <- c(ranks\$"${params.score_column}")
 names(ranks2) <- c(ranks\$"${params.gene_column}")
 
+# run fgsea, get the resulting object
+# the minSize & maxSize defaults from the tutorial
 fgseaRes <- fgsea(pathways = pathways, 
                   stats    = ranks2,
                   minSize  = 15,
@@ -22,14 +23,5 @@ fgseaRes <- fgsea(pathways = pathways,
 
 fwrite(fgseaRes[order(pval), ], file="gsea.csv", sep=",", sep2=c("", " ", ""))
 
-#collapsedPathways <- collapsePathways(fgseaRes[order(pval)][padj < 0.01], 
-#                                      pathways, ranks2)
-
-#mainPathways <- fgseaRes[pathway %in% collapsedPathways\$mainPathways][
-#                         order(-NES), pathway]
-
-#fwrite(mainPathways, file="mainPathways.csv", sep=",", sep2=c("", " ", ""))
-
-#fwrite(collapsedPathways\$parentPathways, file="parentPathways.csv", sep=",", sep2=c("", " ", ""))
 
 

@@ -22,6 +22,7 @@ logger.addHandler(consoleHandler)
 def create_ranking(source_file,
                    destination_file
                    ):
+    # NF sets these variables via templating
     gene_id_col = "${params.gene_column}"
     score_col = "${params.score_column}"
     pval_col = "${params.pval_column}"
