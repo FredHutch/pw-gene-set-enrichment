@@ -24,7 +24,7 @@ def create_ranking(source_file,
                    ):
     gene_id_col = "${params.gene_column}"
     score_col = "${params.score_column}"
-    pval_col = "${params.pval_col}"
+    pval_col = "${params.pval_column}"
     ranking_method = "${params.rank_method}"
 
     de_results = pd.read_csv(source_file)
@@ -65,7 +65,7 @@ def create_ranking(source_file,
 
 
 if __name__ == "__main__":
-    source_file = "${de_result}"
+    source_file = "${input_csv}"
     destination_file = "${params.rank_file_name}"
 
     # Make sure that the input file exists

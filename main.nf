@@ -6,19 +6,9 @@ nextflow.enable.dsl=2
 
 // Set default parameters
 params.help = false
-
-params.rank_method = 'logfold-splitrank'
-params.output_dir = 'gsea'
-params.rank_file_name = 'rankings.csv'
-
-params.gene_column = 'gene_id'
-params.score_column = 'logFC' //'log2FoldChange'
-params.pval_col = 'pvalue'
-
-// Set the containers to use for each component
-params.container__pandas = "quay.io/fhcrc-microbiome/python-pandas:0fd1e29"
-params.container__fgsea = "quay.io/biocontainers/bioconductor-fgsea:1.20.0--r41h399db7b_0"
-params.container__gseapy = "quay.io/biocontainers/gseapy:0.10.7--pyhdfd78af_0"
+params.input_csv = false
+params.genesets_file = false
+params.output_dir = false
 
 
 // Import modules
@@ -33,7 +23,7 @@ Usage:
 nextflow run FredHutch/pw-gene-set-enrichment <ARGUMENTS>
 
 Input Data:
-  --counts_file         CSV file containing expression counts of genes to cell types
+  --input_csv.          CSV file containing differential expression results of genes, log-fold change and p_values
   --genesets_file       .GMT file containing the gene sets to use
                         This is currently tested using the 'msigdb' sets
                         from http://www.gsea-msigdb.org/
@@ -43,8 +33,9 @@ Required Arguments:
 
 Optional Arguments:
   --rank_method         Sample normalization method. Choose from {‘logfold-stddev’}. Default: logfold-stddev.
-  --score_column        The name of the column in the counts_file to use to create gene rank. Default: log2FoldChange
-  --gene_column         The name of the column in the counts file with gene ids. Default: gene_id
+  --score_column        The name of the column in the input_csv to use to create gene rank. Default: logFC
+  --pval_column         The name of the column in the input_csv that has p_values for the score column. Default: pvalue
+  --gene_column         The name of the column in the input_csv with gene ids. Default: gene_id
   --rank_file_name      The name of the file to create that has ranking data. Default: rankings.csv
     """.stripIndent()
 }
@@ -62,24 +53,24 @@ workflow {
         exit 1
     }
 
-    // If either the --counts_file or --genesets_file are not provided
-    if ( !params.counts_file || !params.genesets_file){
+    // If either the --input_csv or --genesets_file are not provided
+    if ( !params.input_csv || !params.genesets_file){
         log.info"""
-        ERROR: Must provide both --counts_file and --genesets_file
+        ERROR: Must provide both --input_csv and --genesets_file
         View help text with --help for more details.
         """.stripIndent()
         exit 1
     }
 
-    // If the file specified by --counts_file does not exist
-    if ( params.counts_file && !file(params.counts_file).exists() ) {
+    // If the file specified by --input_csv does not exist
+    if ( params.input_csv && !file(params.input_csv).exists() ) {
         log.info"""
-        ERROR: --counts_file file ${params.counts_file} does not exist
+        ERROR: --input_csv file ${params.input_csv} does not exist
         """.stripIndent()
         exit 1
     }
 
-    // If the file specified by --counts_file does not exist
+    // If the file specified by --genesets_file does not exist
     if ( params.genesets_file && !file(params.genesets_file).exists() ) {
         log.info"""
         ERROR: --genesets_file file ${params.genesets_file} does not exist

@@ -12,7 +12,7 @@ process create_ranking {
     publishDir "${params.output_dir}", mode: "copy", overwrite: true
     
     input:
-    path de_result, stageAs: "*"
+    path input_csv, stageAs: "*"
 
     output:
     path "$params.rank_file_name"
@@ -51,10 +51,10 @@ process run_fgsea {
 workflow geneset_enrichment {
 
     main:
-        counts_ch = Channel.fromPath(params.counts_file)
+        input_csv_ch = Channel.fromPath(params.input_csv)
 
         // Run the ranking
-        create_ranking(counts_ch)
+        create_ranking(input_csv_ch)
 
         // Get the gmt file
         gmt_ch = Channel.fromPath(params.genesets_file)
