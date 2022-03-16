@@ -7,12 +7,13 @@ nextflow.enable.dsl=2
 // Set default parameters
 params.help = false
 
-params.rank_method = 'logfold-stddev'
+params.rank_method = 'logfold-splitrank'
 params.output_dir = 'gsea'
 params.rank_file_name = 'rankings.csv'
 
 params.gene_column = 'gene_id'
-params.score_column = 'log2FoldChange'
+params.score_column = 'logFC' //'log2FoldChange'
+params.pval_col = 'pvalue'
 
 // Set the containers to use for each component
 params.container__pandas = "quay.io/fhcrc-microbiome/python-pandas:0fd1e29"

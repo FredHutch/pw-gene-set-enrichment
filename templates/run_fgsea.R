@@ -1,14 +1,8 @@
 #!/usr/bin/env Rscript
-
-#install.packages('readr')
-
 library(fgsea)
 library(data.table)
 library(ggplot2)
 set.seed(42)
-#library(readr)
-
-
 
 # load in the GMT file
 pathways <- gmtPathways("${gmt}")
@@ -18,8 +12,8 @@ pathways <- gmtPathways("${gmt}")
 ranks <- read.csv("${ranking}",
                     header=TRUE, colClasses = c("character", "numeric"))
 
-ranks2 <- c(ranks\$ranking_score)
-names(ranks2) <- c(ranks\$gene_id)
+ranks2 <- c(ranks\$"${params.score_column}")
+names(ranks2) <- c(ranks\$"${params.gene_column}")
 
 fgseaRes <- fgsea(pathways = pathways, 
                   stats    = ranks2,
@@ -28,11 +22,11 @@ fgseaRes <- fgsea(pathways = pathways,
 
 fwrite(fgseaRes[order(pval), ], file="gsea.csv", sep=",", sep2=c("", " ", ""))
 
-collapsedPathways <- collapsePathways(fgseaRes[order(pval)][padj < 0.01], 
-                                      pathways, ranks2)
+#collapsedPathways <- collapsePathways(fgseaRes[order(pval)][padj < 0.01], 
+#                                      pathways, ranks2)
 
-mainPathways <- fgseaRes[pathway %in% collapsedPathways\$mainPathways][
-                         order(-NES), pathway]
+#mainPathways <- fgseaRes[pathway %in% collapsedPathways\$mainPathways][
+#                         order(-NES), pathway]
 
 #fwrite(mainPathways, file="mainPathways.csv", sep=",", sep2=c("", " ", ""))
 
