@@ -3,18 +3,8 @@
 // Using DSL-2
 nextflow.enable.dsl=2
 
-
-// Set default parameters
-// many of the default parameters are in the nextflow.config
-params.help = false
-params.input_csv = false
-params.genesets_file = false
-params.output_dir = false
-
-
 // Import modules
 include { geneset_enrichment } from './modules/geneset_enrichment.nf'
-
 
 // Function which prints help message text
 def helpMessage() {
