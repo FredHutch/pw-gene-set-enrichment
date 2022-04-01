@@ -25,7 +25,7 @@ def create_ranking(source_file,
     # NF sets these variables via templating
     gene_id_col = "${params.gene_column}"
     score_col = "${params.score_column}"
-    pval_col = "${params.pval_column}"
+    pval_column = "${params.pval_column}"
 
     de_results = pd.read_csv(source_file)
 
@@ -39,7 +39,7 @@ def create_ranking(source_file,
     de_results_positive = de_results[de_results[score_col] >= 0].copy(deep=True)
 
     # do an ascending sort (smallest pvalues at the top)
-    de_results_positive.sort_values(pval_col,
+    de_results_positive.sort_values(pval_column,
                                     axis=0,
                                     ascending=True,
                                     inplace=True)
@@ -48,7 +48,7 @@ def create_ranking(source_file,
     de_results_negative = de_results[de_results[score_col] < 0].copy(deep=True)
 
     # do an descending sort for negative score_col values (largest pvalues at the top)
-    de_results_negative.sort_values(pval_col,
+    de_results_negative.sort_values(pval_column,
                                     axis=0,
                                     ascending=False,
                                     inplace=True)
