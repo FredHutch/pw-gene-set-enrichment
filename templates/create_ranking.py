@@ -26,7 +26,6 @@ def create_ranking(source_file,
     gene_id_col = "${params.gene_column}"
     score_col = "${params.score_column}"
     pval_col = "${params.pval_column}"
-    ranking_method = "${params.rank_method}"
 
     de_results = pd.read_csv(source_file)
 
