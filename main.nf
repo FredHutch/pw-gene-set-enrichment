@@ -14,7 +14,7 @@ Usage:
 nextflow run FredHutch/pw-gene-set-enrichment <ARGUMENTS>
 
 Input Data:
-  --input_csv.          CSV file containing differential expression results of genes, log-fold change and p_values
+  --input_csv           CSV file containing differential expression results of genes, log-fold change and p_values
   --genesets_file       .GMT file containing the gene sets to use
                         This is currently tested using the 'msigdb' sets
                         from http://www.gsea-msigdb.org/
